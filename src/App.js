@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
 function App() {
   const [tech, setTech] = useState(['React', 'Reactjs', 'ReactNative']);
@@ -20,7 +20,7 @@ function App() {
   useEffect(() => {
     localStorage.setItem('tech', JSON.stringify(tech));
   }, [tech]);
-
+  const techSize = useMemo(() => tech.length, [tech]);
   return (
     <>
       <ul>
@@ -34,6 +34,7 @@ function App() {
         onChange={e => setNewTech(e.target.value)}
         placeholder="Type the new tech"
       />
+      <p>Quantity: {techSize}</p>
       <button type="button" onClick={() => handleAdd()}>
         Add
       </button>
