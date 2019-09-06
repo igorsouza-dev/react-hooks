@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function App() {
   const [tech, setTech] = useState(['React', 'Reactjs', 'ReactNative']);
@@ -6,6 +6,21 @@ function App() {
   function handleAdd() {
     setTech([...tech, newTech]);
   }
+  // empty array = executes only one time
+  // componentDidMount
+  useEffect(() => {
+    const storageTech = localStorage.getItem('tech');
+    if (storageTech) {
+      setTech(JSON.parse(storageTech));
+    }
+  }, []);
+
+  // array with values = executes for every change in the array
+  // componentDidUpdate
+  useEffect(() => {
+    localStorage.setItem('tech', JSON.stringify(tech));
+  }, [tech]);
+
   return (
     <>
       <ul>
@@ -19,7 +34,9 @@ function App() {
         onChange={e => setNewTech(e.target.value)}
         placeholder="Type the new tech"
       />
-      <button onClick={() => handleAdd()}>Add</button>
+      <button type="button" onClick={() => handleAdd()}>
+        Add
+      </button>
     </>
   );
 }
