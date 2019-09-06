@@ -1,11 +1,14 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 
 function App() {
   const [tech, setTech] = useState(['React', 'Reactjs', 'ReactNative']);
   const [newTech, setNewTech] = useState('');
-  function handleAdd() {
+
+  const handleAdd = useCallback(() => {
     setTech([...tech, newTech]);
-  }
+    setNewTech('');
+  }, [tech, newTech]);
+
   // empty array = executes only one time
   // componentDidMount
   useEffect(() => {
@@ -20,7 +23,9 @@ function App() {
   useEffect(() => {
     localStorage.setItem('tech', JSON.stringify(tech));
   }, [tech]);
+
   const techSize = useMemo(() => tech.length, [tech]);
+
   return (
     <>
       <ul>
